@@ -1,0 +1,386 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Loan Api Documetation",
+    "description": "This is an API of Loan",
+    "version": "1.0.0",
+    "contact": {
+      "email": "antoniowellington542@gmail.com"
+    }
+  },
+  "paths": {
+    "/user/create": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create a new User",
+        "description": "Create a new User",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/createUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Car Already Exists"
+          }
+        }
+      }
+    },
+    "/user/find/{cpf}": {
+      "parameters":[
+        {
+          "name": "cpf",
+          "in": "path",
+          "description": "User Cpf",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "tags": ["Users"],
+        "summary":"Find user",
+        "description": "Find user",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/findUserResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/loan/create":{
+      "post": {
+        "tags": ["Loans"],
+        "summary": "Create a new loan",
+        "description": "Create a new loan",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/createLoan"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Loan Already Exists"
+          }
+        }
+      }
+    },
+    "/loan/simulation":{
+      "post": {
+        "tags": ["Loans"],
+        "summary": "Create a new simulation",
+        "description": "Create a new simulation",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/simulateLoan"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/createLoan"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/loan/find/{id}": {
+      "parameters":[
+        {
+          "name": "id",
+          "in": "path",
+          "description": "Loan id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "tags": ["Loans"],
+        "summary": "Find a Loan by id",
+        "description": "Find a Loan by id",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/findLoan"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Loan not Found!"
+          }
+        }
+      }
+    },
+    "/loan/list": {
+      "get": {
+        "tags": ["Loans"],
+        "summary": "List all Loans",
+        "description": "List all Loans",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/listLoan"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "createUser": {
+      "type": "object",
+      "properties": {
+        "cpf": {
+          "type": "string"
+        },
+        "birthday": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "cpf": "User",
+        "birthday": "User Birthday"
+      }
+    },
+    "findUser":{
+      "type": "object",
+      "properties": {
+        "cpf": {
+          "type": "string"
+        }
+      }
+    },
+    "findUserResult":{
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "cpf": {
+          "type": "string"
+        },
+        "birthday": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string"
+        }
+      }
+    },
+    "createLoan":{
+      "type": "object",
+      "properties": {
+        "cpf": {
+          "type":"string"
+        },
+        "birthday": {
+          "type":"string"
+        },
+        "value": {
+          "type":"number"
+        },
+        "uf": {
+          "type":"string"
+        },
+        "tax": {
+          "type":"number"
+        },
+        "parcelValue": {
+          "type":"number"
+        },
+        "qntParcels": {
+          "type":"number"
+        },
+        "totalTax": {
+          "type":"number"
+        },
+        "totalPayValue": {
+          "type":"number"
+        },
+        "parcels": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "payValue": {
+                "type":"number"
+              },
+              "feesValue": {
+                "type":"number"
+              },
+              "valueWithFees": {
+                "type":"number"
+              },
+              "parcelValue": {
+                "type":"number"
+              },
+              "payDate": {
+                "type":"string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "simulateLoan":{
+      "type": "object",
+      "properties": {
+        "birthday": {
+          "type":"string"
+        },
+        "uf": {
+          "type":"string"
+        },
+        "cpf": {
+          "type":"string"
+        },
+        "parcelValue": {
+          "type":"number"
+        },
+        "value": {
+          "type":"number"
+        }
+      }
+    },
+    "findLoan":{
+      "type": "object",
+      "properties": {
+        "cpf": {
+          "type":"string"
+        },
+        "birthday": {
+          "type":"string"
+        },
+        "value": {
+          "type":"number"
+        },
+        "uf": {
+          "type":"string"
+        },
+        "tax": {
+          "type":"number"
+        },
+        "parcelValue": {
+          "type":"number"
+        },
+        "qntParcels": {
+          "type":"number"
+        },
+        "totalTax": {
+          "type":"number"
+        },
+        "totalPayValue": {
+          "type":"number"
+        },
+        "parcels": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "payValue": {
+                "type":"number"
+              },
+              "feesValue": {
+                "type":"number"
+              },
+              "valueWithFees": {
+                "type":"number"
+              },
+              "parcelValue": {
+                "type":"number"
+              },
+              "payDate": {
+                "type":"string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "listLoan":{
+      "loans": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type":"string"
+            },
+            "user_id": {
+              "type":"string"
+            },
+            "uf": {
+              "type":"string"
+            },
+            "value": {
+              "type":"number"
+            },
+            "parcelValue": {
+              "type":"number"
+            },
+            "tax": {
+              "type":"number"
+            },
+            "totalPayValue": {
+              "type":"number"
+            },
+            "totalTax": {
+              "type":"number"
+            },
+            "qntParcels": {
+              "type":"number"
+            },
+            "created_at": {
+              "type":"string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
