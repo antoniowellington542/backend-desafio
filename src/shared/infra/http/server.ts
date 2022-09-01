@@ -1,5 +1,5 @@
+import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
-
 import 'express-async-errors';
 import 'reflect-metadata';
 import 'dotenv/config';
@@ -14,7 +14,7 @@ import { router } from './routes/index';
 createConnection();
 
 const app = express();
-
+app.use(cors());
 app.use(express.json());
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
