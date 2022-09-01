@@ -16,7 +16,14 @@ createConnection();
 const app = express();
 app.use(cors());
 app.use(express.json());
-
+app.use((request: Request, response: Response, next: NextFunction)=>{
+  response.header('Acess-Control-Allow-Credentials', 'true');
+  response.header('Access-Control-Allow-Origin', '*');  
+  response.header('Access-Control-Allow-Methods','GET, POST, PUT, DELETE');
+  response.header('Acess-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  app.use(cors());
+  next();
+});
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use(router);
 
