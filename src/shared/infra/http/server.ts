@@ -9,17 +9,19 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerFile from '../../../swagger.json';
 import { AppError } from '../../errors/AppError';
 import { createConnection } from '../typeorm/index';
-import { router } from './routes/index';
 import raterLimiter from './middlewares/raterLimiter';
+import { router } from './routes/index';
 
 createConnection();
 
 const app = express();
+
 app.use(raterLimiter);
+
 app.use(express.json());
 // app.use((request: Request, response: Response, next: NextFunction)=>{
 //   response.header('Acess-Control-Allow-Credentials', 'true');
-//   response.header('Access-Control-Allow-Origin', '*');  
+//   response.header('Access-Control-Allow-Origin', '*');
 //   response.header('Access-Control-Allow-Methods','GET, POST, PUT, DELETE');
 //   response.header('Acess-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 //   app.use(cors());
