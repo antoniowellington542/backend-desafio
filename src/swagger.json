@@ -87,7 +87,7 @@
         }
       }
     },
-    "/loan/simulation":{
+    "/loan/simulate":{
       "post": {
         "tags": ["Loans"],
         "summary": "Create a new simulation",
